@@ -90,7 +90,9 @@ void TradeCoreAPI::doLoad(){
   json_t *candle_close_price;
   json_t *candle_low;
   this->res_status = false;
-  json = json_loads(this->client(), 0, &error);
+  char *data = this->client();
+  json = json_loads(data, 0, &error);
+  free(data);
   if (this->api_status){
     if(json){
       if (json_is_object(json)){
@@ -133,6 +135,7 @@ void TradeCoreAPI::doLoad(){
             }
           }
         }
+        json_object_clear(json);
       }
     }
   }
